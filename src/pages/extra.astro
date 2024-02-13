@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MatrixInput from '../components/MatrixInput.svelte';
+---
+
+<Layout title='Extra'>
+    <div class="container">
+        <MatrixInput variable="A" client:idle />
+        <MatrixInput variable="B" client:idle />
+    </div>
+</Layout>
+
+<style>
+    .container{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+</style>

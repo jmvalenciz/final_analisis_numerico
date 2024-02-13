@@ -1,0 +1,36 @@
+---
+interface Props {
+	title: string;
+	body?: string;
+	href?: string;
+}
+
+const { href, title, body } = Astro.props;
+---
+
+<div class="card">
+	<h2 id="title">{title}</h2>
+	<span id="body">{body}</span>
+</div>
+
+<style>
+	.card{
+		border-radius: 1rem;
+		padding: 0 1rem 1rem 1rem;
+		background-color: var(--background-primary);
+		border: 1px solid var(--border-color);
+		transition: background-color 0.3s;
+		cursor: pointer;
+	}
+	.card:hover{
+		background-color: var(--background-secondary);
+	}
+</style>
+
+<script>
+	document.querySelectorAll("div.card").forEach(c=>{
+		c.addEventListener('click', e=>{
+		window.location.href = "/";
+	})
+	});
+</script>
