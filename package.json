@@ -15,10 +15,13 @@
     "astro": "^4.3.6",
     "astro-icon": "^1.1.0",
     "mathjs": "^12.3.2",
+    "nanostores": "^0.10.0",
     "svelte": "^4.2.10",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@iconify-json/teenyicons": "^1.1.9"
+    "@iconify-json/teenyicons": "^1.1.9",
+    "prettier": "^3.2.5",
+    "prettier-plugin-astro": "^0.13.0"
   }
 }

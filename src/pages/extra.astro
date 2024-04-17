@@ -1,19 +1,35 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import MatrixInput from '../components/MatrixInput.svelte';
+import Layout from "../layouts/Layout.astro";
+import MatrixInput from "../components/MatrixInput.svelte";
 ---
 
-<Layout title='Extra'>
-    <div class="container">
-        <MatrixInput variable="A" client:idle />
-        <MatrixInput variable="B" client:idle />
-    </div>
+<Layout title="Extra">
+	<main>
+		<div id="toast-list"></div>
+		<div class="container">
+			<MatrixInput variable="A" client:idle />
+			<MatrixInput variable="B" client:idle />
+			<button id="on-error">Add</button>
+		</div>
+	</main>
 </Layout>
 
 <style>
-    .container{
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
+	.container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
 </style>
+
+<script>
+	let counter = 0;
+	import NotificationController from "../controllers/notifications";
+	document.getElementById("on-error")!.onclick = () => {
+		NotificationController.send({
+			title: "Error",
+			body: `lorem ipsum ${counter++}`,
+			type: "error",
+		});
+	};
+</script>
