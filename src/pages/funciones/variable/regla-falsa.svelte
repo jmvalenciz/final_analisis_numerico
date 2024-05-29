@@ -1,5 +1,5 @@
 <script lang="ts">
-    import taylor from "../../../controllers/funciones/variable/taylor";
+    import regla_falsa from "../../../controllers/funciones/variable/regla_falsa";
 		import { sleep } from "../../../controllers/utils";
     var iterations:any[] = [];
 		var ready = false;
@@ -14,9 +14,10 @@
 			ready = false;
 			data.err = Number.parseFloat(data.err);
 			data.x0 = Number.parseFloat(data.x0);
-			data.xn = Number.parseFloat(data.xn);
+			data.x1 = Number.parseFloat(data.x1);
+			data.max_iter = Number.parseFloat(data.max_iter);
 			console.log(data)
-			for(let i of taylor(data.function, data.x0, data.xn, data.err)){
+			for(let i of regla_falsa(data.function, data.x0, data.x1, data.err)){
 					iterations = [...iterations, i];
 					await sleep(100);
 			}
@@ -31,15 +32,20 @@
 	</label>
 	<br>
 	<label>
-		<span>X0</span>
+		<span>a</span>
 		<br>
 		<input type="text" name="x0">
 	</label>
+	<label>
+		<span>b</span>
+		<br>
+		<input type="text" name="x1">
+	</label>
 	<br>
 	<label>
-		<span>Xn</span>
+		<span>Max Iter</span>
 		<br>
-		<input type="text" name="xn">
+		<input type="text" name="max_iter">
 	</label>
 	<br>
 	<label>
@@ -54,14 +60,16 @@
 <table class={ready?"ready":""}>
     <tr>
         <th>iter.</th>
-        <th>f(x)</th>
-        <th>disp.</th>
+        <th>a</th>
+        <th>b</th>
+        <th>err</th>
     </tr>
     {#each iterations as i}
         <tr>
-            <td>{i.n}</td>
-            <td>{i.x_next.toExponential(3)}</td>
-            <td>{i.disp.toExponential(3)}</td>
+            <td>{i.i}</td>
+            <td>{i.a.toExponential(3)}</td>
+            <td>{i.b.toExponential(3)}</td>
+            <td>{i.err.toExponential(3)}</td>
         </tr>
     {/each}
 </table>

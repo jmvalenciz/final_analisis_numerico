@@ -1,5 +1,5 @@
 <script lang="ts">
-    import taylor from "../../../controllers/funciones/variable/taylor";
+    import {raices_multiples} from "../../../controllers/funciones/variable/raices_multiples";
 		import { sleep } from "../../../controllers/utils";
     var iterations:any[] = [];
 		var ready = false;
@@ -14,9 +14,9 @@
 			ready = false;
 			data.err = Number.parseFloat(data.err);
 			data.x0 = Number.parseFloat(data.x0);
-			data.xn = Number.parseFloat(data.xn);
+			data.max_iter = Number.parseFloat(data.max_iter);
 			console.log(data)
-			for(let i of taylor(data.function, data.x0, data.xn, data.err)){
+			for(let i of raices_multiples(data.function, data.x0, data.err, data.max_iter)){
 					iterations = [...iterations, i];
 					await sleep(100);
 			}
@@ -37,9 +37,9 @@
 	</label>
 	<br>
 	<label>
-		<span>Xn</span>
+		<span>Max Iter</span>
 		<br>
-		<input type="text" name="xn">
+		<input type="text" name="max_iter">
 	</label>
 	<br>
 	<label>
@@ -54,14 +54,14 @@
 <table class={ready?"ready":""}>
     <tr>
         <th>iter.</th>
-        <th>f(x)</th>
-        <th>disp.</th>
+        <th>x<sub>i</sub></th>
+        <th>err</th>
     </tr>
     {#each iterations as i}
         <tr>
-            <td>{i.n}</td>
-            <td>{i.x_next.toExponential(3)}</td>
-            <td>{i.disp.toExponential(3)}</td>
+            <td>{i.i}</td>
+            <td>{i.xn.toExponential(3)}</td>
+            <td>{i.err.toExponential(3)}</td>
         </tr>
     {/each}
 </table>

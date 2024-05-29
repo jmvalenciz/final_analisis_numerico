@@ -1,4 +1,3 @@
-import type { Fn } from "../../utils";
 import * as math from 'mathjs';
 
 export function* newton(f: string, x0: number, tol: number, max_iter: number){
