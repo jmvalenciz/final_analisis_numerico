@@ -1,12 +1,12 @@
 import type { Fn } from "../../utils";
 
-export default function* biseccion(f: Fn, start:number, end:number, tol:number, max_iter: number){
+export default function* biseccion(f: Fn, start:number, end:number, tol:number){
 	let a = start;
 	let b = end;
+	let m = (a+b)/2;
 	let i = 0;
 	let f_a = f(a);
 	let f_b = f(b);
-	let m = nuevo_m(a,f_a,b,f_b);
 	let err = Math.abs(b-a)/Math.pow(2, i);
 	if(f_a*f_b>0){
 		throw new Error("No hay raiz en el intervalo");
@@ -30,20 +30,11 @@ export default function* biseccion(f: Fn, start:number, end:number, tol:number, 
 		} else {
 			a=m;
 		}
-		i++;
-		m = nuevo_m(a,f_a,b,f_b);
+		m = (a+b)/2;
 		f_a = f(a);
 		f_b = f(b);
+		i++;
 		err = Math.abs(b-a)/Math.pow(2, i);
 		yield {a,b,err,i};
-	} while(err>tol && i <= max_iter);
-}
-
-function nuevo_m(x1:number, y1:number, x2:number, y2:number){
-    const m = (y2-y1)/(x2-x1);
-    const b = y1-m*x1;
-    //    y = mx + b
-    // => (y-b)/m = x (pero y debe ser cero) 
-    // => -b/m = x
-    return -b/m;
+	} while(err>tol);
 }
