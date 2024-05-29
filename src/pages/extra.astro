@@ -1,16 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import MatrixInput from "../components/MatrixInput.svelte";
+import ExtraView from './extra.svelte';
+
+
 ---
 
 <Layout title="Extra">
 	<main>
-		<div id="toast-list"></div>
-		<div class="container">
-			<MatrixInput variable="A" client:idle />
-			<MatrixInput variable="B" client:idle />
-			<button id="on-error">Add</button>
-		</div>
+		<ExtraView client:load></ExtraView>
 	</main>
 </Layout>
 
@@ -21,15 +18,3 @@ import MatrixInput from "../components/MatrixInput.svelte";
 		flex-wrap: wrap;
 	}
 </style>
-
-<script>
-	let counter = 0;
-	import NotificationController from "../controllers/notifications";
-	document.getElementById("on-error")!.onclick = () => {
-		NotificationController.send({
-			title: "Error",
-			body: `lorem ipsum ${counter++}`,
-			type: "error",
-		});
-	};
-</script>

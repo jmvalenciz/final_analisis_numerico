@@ -33,3 +33,15 @@ export function validacion_EDD(A:Matrix){
         }
     }
 }
+
+export function zeroes(n:number){
+    let m = [];
+    for(let i=0;i<n;i++){
+        let l = [];
+        for(let j=0;j<n;j++){
+            l.push(0)
+        }
+        m.push(l);
+    }
+    return m;
+}

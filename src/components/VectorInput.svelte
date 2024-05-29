@@ -1,36 +1,25 @@
 <script lang="ts">
     export let variable;
-    export let matrix:number[][] = [[0]];
+    export let vector:number[] = [0];
 
     var current_editable:{i?:number, j?:number} = {
         i:undefined,
-        j:undefined
     }
     //var matrix:Array<Array<number>> = [
     //    [0,0,0],
     //    [0,0,0],
     //    [0,0,0]
     //];
-    function add_vertical(){
-        const len = matrix[0].length;
-        matrix = [...matrix, Array(len).fill(0)];
-    }
     function add_horizontal(){
-        matrix = [...matrix.map(row=>[...row,0])];
+        vector = [...vector,0];
     }
-    function remove_row(i:number){
-        matrix.splice(i, 1);
-        matrix = [...matrix];
+    function remove_column(i:number){
+        vector.splice(i, 1);
+        vector = [...vector];
     }
-    function handleInput(e:any, i:number,j:number){
+    function handleInput(e:any, i:number){
         const parsed = Number.parseFloat(e.target.value);
-        matrix[i][j] = Number.isNaN(parsed)?0:parsed;
-    }
-    function remove_column(j:number){
-        matrix = [...matrix.map(row=>{
-            row.splice(j,1)
-            return row;
-        })]
+        vector[i] = Number.isNaN(parsed)?0:parsed;
     }
 
 </script>
@@ -40,28 +29,23 @@
     <div id="matrix">
         <table>
             <tr>
-                <td> <b>{matrix.length}x{matrix[0].length}</b> </td>
-                {#each matrix[0] as r,j}
-                    <td><button class="remove" on:click={()=>remove_column(j)}>-</button></td>
-                {/each}
+                <td> <b>{vector.length}</b> </td>
             </tr>
-            {#each matrix as row, i}
+            {#each vector as item, i}
                 <tr>
-                    <td><button class="remove" on:click={()=>remove_row(i)}>-</button></td>
-                    {#each row as item, j}
-                        <td>
-                            {#if current_editable.i == i && current_editable.j==j}
-                            <input class="item-edit" on:input={(e)=>handleInput(e,i,j)} type="text" name="" id="" value={item}>
-                            {:else}
-                                <div on:click={(e)=>current_editable={i,j}} class="item">{item}</div>
-                            {/if}
-                        </td>
-                    {/each}
+                    <td><button class="remove" on:click={()=>remove_column(i)}>-</button></td>
+                    <td>
+                        {#if current_editable.i == i}
+                        <input class="item-edit" on:input={(e)=>handleInput(e,i)} type="text" name="" id="" value={item}>
+                        {:else}
+                            <div on:click={(e)=>current_editable={i}} class="item">{item}</div>
+                        {/if}
+                    </td>
                 </tr>
             {/each}
         </table>
-        <button id="add-horizontal" on:click={()=>add_horizontal()}>+</button>
-        <button id="add-vertical" on:click={()=>add_vertical()}>+</button>
+        <div></div>
+        <button id="add-vertical" on:click={()=>add_horizontal()}>+</button>
         <button on:click={()=>current_editable={i:undefined,j:undefined}}>✓</button>
     </div>
 </div>

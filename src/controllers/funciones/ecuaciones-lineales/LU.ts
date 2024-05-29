@@ -1,10 +1,14 @@
-import type { Matrix, Vector } from "../../utils";
+import { zeroes, type Matrix, type Vector } from "../../utils";
 import * as math from 'mathjs';
 
 export function LU(A:Matrix, b:Vector){
     let aug = sys2augmented(A,b);
     const n = A.length;
-    let L = Array(n).fill(Array(n).fill(0));
+    let L: number[][] = zeroes(n);
+    debugger
+    for(let i=0;i<A.length;i++){
+        L[i][i]=1;
+    }
     for(let i=0; i<A.length-1; i++){
         for(let j=i+1;j<A.length;j++){
             const m = aug[j][i]/aug[i][i];
